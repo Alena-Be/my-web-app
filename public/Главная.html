@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SLine — Спортивная студия</title>
+  <link rel="stylesheet" href="bootstrap-5.3.8-dist/css/bootstrap.min.css">
+  <script src="bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="index.html">
+        <img src="assets/logo.png" alt="SLine" width="40" height="40" />
+        <span>SLine</span>
+      </a>
+      <nav class="nav">
+        <a href="glavnaya" class="active">Главная</a>
+        <a href="registraciya">Регистрация</a>
+        <a href="lichniy-kabinet">Личный кабинет</a>
+        <a href="akcii">Акции</a>
+        <a href="otzyvy">Отзывы</a>
+        <a href="stoimost">Стоимость</a>
+        <a href="raspisanie">Расписание</a>
+      </nav>
+      <div id="authBlock" class="auth-block"></div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-inner">
+        <div class="hero-text">
+          <h1>
+            <span style="color: rgb(19, 252, 19);">Тренируйся.</span>
+            <span style="color: rgb(255, 0, 0);">Развивайся.</span>
+            <span style="color: rgb(255, 247, 100);">Побеждай.</span>
+          </h1>
+          <p style="color: #ccc;">Студия SLine — современный спортивный комплекс с профессиональными тренерами, передовым оборудованием и гибким расписанием для любого уровня подготовки.</p>
+          <div class="actions">
+            <a class="btn btn-primary" href="registration.html">Начать бесплатно</a>
+            <a class="btn btn-primary" href="pricing.html">Тарифы</a>
+          </div>
+        </div>
+        <div class="hero-media">
+          <img src="assets/Главная%20страница.jpg" alt="Тренировка в студии SLine" />
+        </div>
+      </div>
+    </section>
+<section class="container" style="text-align: center; padding: 24px 0;">
+  <p style="color: #fff; font-size: 18px;">Добро пожаловать на сайт SLine!</p>
+  <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-top: 12px;">
+    <a href="/raspisanie" class="btn btn-outline">Расписание</a>
+    <a href="/stoimost" class="btn btn-outline">Стоимость</a>
+  </div>
+  <div id="actionButtons" style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 20px;"></div>
+</section>
+    <section class="features container">
+      <h2 class="section-title" style="color: white;">Почему выбирают нас</h2>
+      <div class="grid-3">
+        <div class="card">
+          <h3>Профессиональные тренеры</h3>
+          <p>Сертифицированные специалисты с индивидуальным подходом к каждому клиенту.</p>
+        </div>
+        <div class="card">
+          <h3>Современное оборудование</h3>
+          <p>Оснащённые залы с профессиональным инвентарём для всех видов тренировок.</p>
+        </div>
+        <div class="card">
+          <h3>Гибкое расписание</h3>
+          <p>Утренние, дневные и вечерние тренировки для любого графика и уровня.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="container cta-inner">
+        <h2 style="color: black;">Попробуйте первое занятие бесплатно</h2>
+        <p style="color: black;">Оставьте заявку и получите гостевой визит. Поможем подобрать программу под ваши цели.</p>
+        <a class="btn btn-primary" href="registration.html">Получить гостевой визит</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>
+        <div class="logo"><span>S</span>Line</div>
+        <p class="muted">Спортивная студия — движение к результату</p>
+      </div>
+      <div class="footer-col">
+        <h4>Навигация</h4>
+        <ul>
+          <li><a href="promotions.html">Акции</a></li>
+          <li><a href="reviews.html">Отзывы</a></li>
+          <li><a href="pricing.html">Стоимость</a></li>
+          <li><a href="schedule.html">Расписание</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Контакты</h4>
+        <ul>
+          <li>+7 (901) 386-20-38</li>
+          <li>г. Ярославль, ул. Первомайская, 10</li>
+          <li><a href="mailto:hello@sline.ru">hello@sline.ru</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="copyright">© 2025 SLine</div>
+  </footer>
+
+  <style>
+    body {
+      background-color: #727272b7 !important;
+      color: #fff !important;
+    }
+    a:not(.btn) {
+      color: #000000 !important;
+    }
+    .muted {
+      color: #000000 !important;
+      opacity: 0.7;
+    }
+  </style>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>

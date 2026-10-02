@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Личный кабинет — SLine</title>
+  <link rel="stylesheet" href="bootstrap-5.3.8-dist/css/bootstrap.min.css">
+  <script src="bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css" />
+  <style>
+    body {
+      background-color: #727272b7 !important;
+      color: #fff !important;
+    }
+    /* Голубой цвет для кнопок */
+    .btn-outline {
+      background-color: #51c5d4;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .btn-outline:hover {
+      background-color: #4fb3c1;
+    }
+  
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="index.html">
+        <img src="assets/logo.png" alt="SLine" width="40" height="40" />
+        <span>SLine</span>
+      </a>
+      <nav class="nav">
+        <a href="glavnaya">Главная</a>
+        <a href="registraciya">Регистрация</a>
+        <a href="lichniy-kabinet" class="active">Личный кабинет</a>
+        <a href="akcii">Акции</a>
+        <a href="otzyvy">Отзывы</a>
+        <a href="stoimost">Стоимость</a>
+        <a href="raspisanie">Расписание</a>
+      </nav>
+      <div id="authBlock" class="auth-block"></div>
+    </div>
+  </header>
+
+  <main class="lichniy-kabinet-container">
+    <h1>Личный кабинет</h1>
+
+    <div class="lichniy-kabinet-grid">
+      <div class="card profile-card">
+        <h3>Профиль</h3>
+        <img id="avatar-placeholder-img" class="avatar" src="assets/logo.png" alt="Аватар" />
+
+        <!-- Режим просмотра профиля -->
+        <div id="profileInfo" class="user-info">
+          <h4 id="profileName"></h4>
+          <p id="user-phone"></p>
+        </div>
+
+        <!-- Форма редактирования профиля -->
+        <form id="edit-profile-form" style="display:none;">
+          <div class="form-group">
+            <label for="profileNameInput">Имя</label>
+            <input type="text" id="profileNameInput" name="name" required />
+          </div>
+          <div class="form-group">
+            <label for="profileEmailInput">Email</label>
+            <input type="email" id="profileEmailInput" name="email" required />
+          </div>
+          <div class="form-group">
+            <label for="profilePhoneInput">Телефон</label>
+            <input type="tel" id="profilePhoneInput" name="phone" />
+          </div>
+        </form>
+
+        <div class="action-buttons">
+          <input id="avatarInput" type="file" accept="image/*" hidden />
+          <button id="avatarBtn" class="btn-outline" type="button">Изменить аватар</button>
+          <button id="deleteAccountBtn" class="btn-outline btn-danger" type="button">Удалить аккаунт</button>
+        </div>
+        <div class="action-buttons">
+          <button type="button" id="editProfileBtn" class="btn-outline">Редактировать</button>
+          <button type="submit" form="edit-profile-form" id="saveProfileBtn" class="btn-outline" style="display:none;">Сохранить</button>
+          <button type="button" id="cancelEditBtn" class="btn-outline" style="display:none;">Отмена</button>
+        </div>
+      </div>
+
+      <div class="card membership-card">
+        <h3>Абонемент</h3>
+        <p id="membershipStatus">Нет активного абонемента</p>
+        <button class="btn-outline" type="button">Подробнее</button>
+      </div>
+
+      <div class="card booking-card">
+        <h3>Запись на тренировку</h3>
+        <p>Нет записей</p>
+        <a class="btn-outline" href="schedule.html">Записаться</a>
+      </div>
+    </div>
+
+    <footer class="lichniy-kabinet-footer">
+      <p class="muted">Управляйте тренировками и абонементом в одном месте.</p>
+    </footer>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>
+        <div class="logo"><span>S</span>Line</div>
+        <p class="muted">Управляйте тренировками и абонементом в одном месте.</p>
+      </div>
+    </div>
+    <div class="copyright">© 2025 SLine</div>
+  </footer>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>

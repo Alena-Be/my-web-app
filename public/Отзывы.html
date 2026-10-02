@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Отзывы — SLine</title>
+  <link rel="stylesheet" href="bootstrap-5.3.8-dist/css/bootstrap.min.css">
+  <script src="bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body class="reviews-page">
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="index.html">
+        <img src="assets/logo.png" alt="SLine" width="40" height="40" />
+        <span>SLine</span>
+      </a>
+      <nav class="nav">
+        <a href="glavnaya">Главная</a>
+        <a href="registraciya">Регистрация</a>
+        <a href="lichniy-kabinet">Личный кабинет</a>
+        <a href="akcii">Акции</a>
+        <a href="otzyvy" class="active">Отзывы</a>
+        <a href="stoimost">Стоимость</a>
+        <a href="raspisanie">Расписание</a>
+      </nav>
+      <div id="authBlock" class="auth-block"></div>
+    </div>
+  </header>
+
+  <main class="container">
+    <h1>Отзывы клиентов</h1>
+<div id="adminPanelLink" style="display: none; margin: 16px 0;">
+  <a href="/reviews-list.html" class="btn btn-primary">⚙ Управление отзывами (админ)</a>
+</div>
+<!-- Блок поиска -->
+<div class="search-bar">
+  <div class="row">
+    <div class="col-md-4">
+      <label class="form-label fw-bold">Поиск</label>
+      <input type="text" id="searchQuery" class="form-control" placeholder="Поиск по имени или тексту...">
+    </div>
+    <div class="col-md-3">
+      <label class="form-label fw-bold">Дата от</label>
+      <input type="date" id="dateFrom" class="form-control">
+    </div>
+    <div class="col-md-3">
+      <label class="form-label fw-bold">Дата до</label>
+      <input type="date" id="dateTo" class="form-control">
+    </div>
+    <div class="col-md-2 d-flex align-items-end">
+      <button id="searchBtn" class="btn btn-primary w-100">Найти</button>
+    </div>
+  </div>
+  <div class="row mt-2">
+    <div class="col-12">
+      <button id="resetBtn" class="btn btn-secondary">Сбросить фильтры</button>
+    </div>
+  </div>
+</div>
+<div id="exportBlock" style="display: none; margin-bottom: 20px;">
+  <button id="exportAllBtn" class="btn btn-primary">📥 Экспорт всех в Excel</button>
+  <button id="exportFilteredBtn" class="btn btn-secondary">📥 Экспорт с фильтром</button>
+</div>
+    <!-- Список отзывов подгружается из БД -->
+    <div class="reviews" id="reviewsList"></div>
+
+<nav aria-label="Пагинация">
+  <ul class="pagination" id="pagination"></ul>
+</nav>
+
+    <section class="form-card">
+      <h2>Оставить отзыв</h2>
+      <form id="reviewForm">
+        <div class="mb-3">
+          <label for="reviewName" class="form-label">Имя</label>
+          <input type="text" class="form-control" id="reviewName" placeholder="Ваше имя" required>
+        </div>
+        <div class="mb-3">
+          <label for="reviewText" class="form-label">Отзыв</label>
+          <textarea class="form-control" id="reviewText" rows="4" placeholder="Поделитесь впечатлениями" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Отправить</button>
+      </form>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>
+        <div class="logo"><span>S</span>Line</div>
+        <p class="muted">Ваши отзывы помогают нам становиться лучше.</p>
+      </div>
+    </div>
+    <div class="copyright">© 2025 SLine</div>
+  </footer>
+
+  <!-- Твой скрипт оформления (фон страницы) -->
+  <script src="assets/app.js"></script>
+
+  <!-- Логика отзывов -->
+<script>
+  let currentPage = 1;
+  const limit = 5; // отзывов на страницу
+
+  async function loadReviews(page = 1) {
+    const container = document.getElementById('reviewsList');
+
+    try {
+      // Собираем query-параметры
+      const params = new URLSearchParams();
+      params.append('page', page);
+      params.append('limit', limit);
+
+      const query = document.getElementById('searchQuery').value.trim();
+      const dateFrom = document.getElementById('dateFrom').value;
+      const dateTo = document.getElementById('dateTo').value;
+
+      if (query)    params.append('query', query);
+      if (dateFrom) params.append('dateFrom', dateFrom);
+      if (dateTo)   params.append('dateTo', dateTo);
+
+      const res = await fetch(`/api/reviews/search?${params}`);
+      const result = await res.json();
+
+      displayData(result.data);
+      updatePagination(result.pagination);
+
+      currentPage = result.pagination.page;
+    } catch (err) {
+      console.error('Ошибка:', err);
+      container.innerHTML = '<div class="text-center text-danger">Ошибка загрузки</div>';
+    }
+  }
+
+  function displayData(items) {
+    const container = document.getElementById('reviewsList');
+
+    if (items.length === 0) {
+      container.innerHTML = '<p>Отзывы не найдены</p>';
+      return;
+    }
+
+    container.innerHTML = items.map(r => `
+      <article class="review">
+        <p class="review-text">"${r.text}"</p>
+        <div class="review-author">${r.name}</div>
+      </article>
+    `).join('');
+  }
+
+  function updatePagination(pagination) {
+    const { page, totalPages } = pagination;
+    const pag = document.getElementById('pagination');
+    pag.innerHTML = '';
+
+    if (totalPages <= 1) return;
+
+    // Кнопка «Назад»
+    const prevLi = document.createElement('li');
+    prevLi.className = 'page-item' + (page === 1 ? ' disabled' : '');
+    prevLi.innerHTML = `<a class="page-link" href="#" data-page="${page - 1}">«</a>`;
+    pag.appendChild(prevLi);
+
+    // Кнопки страниц
+    for (let i = 1; i <= totalPages; i++) {
+      const li = document.createElement('li');
+      li.className = 'page-item' + (i === page ? ' active' : '');
+      li.innerHTML = `<a class="page-link" href="#" data-page="${i}">${i}</a>`;
+      pag.appendChild(li);
+    }
+
+    // Кнопка «Вперёд»
+    const nextLi = document.createElement('li');
+    nextLi.className = 'page-item' + (page === totalPages ? ' disabled' : '');
+    nextLi.innerHTML = `<a class="page-link" href="#" data-page="${page + 1}">»</a>`;
+    pag.appendChild(nextLi);
+
+    // Обработчик кликов
+    pag.querySelectorAll('.page-link').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = parseInt(link.dataset.page);
+        if (target >= 1 && target <= totalPages) {
+          loadReviews(target);
+        }
+      });
+    });
+  }
+
+  // Отправка нового отзыва
+  const form = document.getElementById('reviewForm');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const name = document.getElementById('reviewName').value.trim();
+    const text = document.getElementById('reviewText').value.trim();
+
+    if (!name || !text) {
+      alert('Заполните все поля');
+      return;
+    }
+
+    try {
+      const res = await fetch('/api/reviews', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, text })
+      });
+      if (!res.ok) throw new Error('Ошибка');
+      form.reset();
+      await loadReviews(1); // возвращаемся на первую страницу
+    } catch (err) {
+      console.error(err);
+      alert('Не удалось отправить отзыв');
+    }
+  });
+
+  // Кнопки поиска и сброса
+  document.getElementById('searchBtn').addEventListener('click', () => loadReviews(1));
+  document.getElementById('resetBtn').addEventListener('click', () => {
+    document.getElementById('searchQuery').value = '';
+    document.getElementById('dateFrom').value = '';
+    document.getElementById('dateTo').value = '';
+    loadReviews(1);
+  });
+
+  // Enter в поиске
+  document.getElementById('searchQuery').addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      loadReviews(1);
+    }
+  });
+
+  // Первая загрузка
+  loadReviews(1);
+
+ // ===== Экспорт в Excel =====
+
+  // Показываем кнопки только админу
+  fetch('/api/me', { credentials: 'include' })
+    .then(r => r.ok ? r.json() : null)
+    .then(user => {
+      if (user && user.role === 'admin') {
+        document.getElementById('exportBlock').style.display = 'block';
+      }
+    })
+    .catch(() => {});
+
+  // Экспорт всех
+  document.getElementById('exportAllBtn').addEventListener('click', () => {
+    window.location.href = '/api/reviews/export/excel';
+  });
+
+  // Экспорт с текущими фильтрами
+  document.getElementById('exportFilteredBtn').addEventListener('click', () => {
+    const params = new URLSearchParams();
+    const query = document.getElementById('searchQuery').value.trim();
+    const dateFrom = document.getElementById('dateFrom').value;
+    const dateTo = document.getElementById('dateTo').value;
+
+    if (query)    params.append('query', query);
+    if (dateFrom) params.append('dateFrom', dateFrom);
+    if (dateTo)   params.append('dateTo', dateTo);
+
+    const qs = params.toString();
+    window.location.href = '/api/reviews/export/excel/filtered' + (qs ? '?' + qs : '');
+  });
+
+</script>
+</body>
+</html>

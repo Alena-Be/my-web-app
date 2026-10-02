@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Добавить отзыв — SLine</title>
+  <link rel="stylesheet" href="bootstrap-5.3.8-dist/css/bootstrap.min.css">
+  <script src="bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="/"><span>SLine</span></a>
+      <nav class="nav">
+        <a href="glavnaya">Главная</a>
+        <a href="otzyvy">Отзывы</a>
+      </nav>
+      <div id="authBlock" class="auth-block"></div>
+    </div>
+  </header>
+
+  <main class="container narrow">
+    <h1>Добавить отзыв</h1>
+    <form id="addForm" class="form-card">
+      <div class="form-row">
+        <label for="addName">Имя</label>
+        <input type="text" id="addName" required />
+      </div>
+      <div class="form-row">
+        <label for="addText">Отзыв</label>
+        <textarea id="addText" rows="4" required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary full">Сохранить</button>
+      <p class="center"><a href="/reviews-list.html">← К списку</a></p>
+    </form>
+  </main>
+
+  <script src="assets/app.js"></script>
+  <script>
+    document.getElementById('addForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('addName').value.trim();
+      const text = document.getElementById('addText').value.trim();
+
+      const res = await fetch('/api/reviews', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, text })
+      });
+
+      if (res.ok) {
+        alert('Отзыв добавлен');
+        window.location.href = '/reviews-list.html';
+      } else {
+        const data = await res.json();
+        alert(data.error || 'Ошибка');
+      }
+    });
+  </script>
+</body>
+</html>

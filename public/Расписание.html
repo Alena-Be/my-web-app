@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Расписание — SLine</title>
+  <link rel="stylesheet" href="bootstrap-5.3.8-dist/css/bootstrap.min.css">
+    <script src="bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<style>
+    body { background-color: #727272b7; }
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+    main {
+      flex: 1;
+    }
+  </style>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="index.html">
+        <img src="assets/logo.png" alt="SLine" width="40" height="40" />
+        <span>SLine</span>
+      </a>
+      <nav class="nav">
+        <a href="glavnaya">Главная</a>
+        <a href="registraciya">Регистрация</a>
+        <a href="lichniy-kabinet">Личный кабинет</a>
+        <a href="akcii">Акции</a>
+        <a href="otzyvy">Отзывы</a>
+        <a href="stoimost">Стоимость</a>
+        <a href="raspisanie" class="active">Расписание</a>
+      </nav>
+      <div id="authBlock" class="auth-block"></div>
+    </div>
+  </header>
+
+  <main class="container">
+    <h1>Расписание тренировок</h1>
+
+    <div class="table schedule-table">
+      <div class="table-row table-head">
+        <div>Время</div>
+        <div>Пн</div>
+        <div>Вт</div>
+        <div>Ср</div>
+        <div>Чт</div>
+        <div>Пт</div>
+        <div>Сб</div>
+        <div>Вс</div>
+      </div>
+      <div class="table-row">
+        <div data-label="Время">08:00</div>
+        <div data-label="Пн">Силовая</div>
+        <div data-label="Вт">Оздоровительная</div>
+        <div data-label="Ср">Силовая</div>
+        <div data-label="Чт">Пилатес</div>
+        <div data-label="Пт">Оздоровительная</div>
+        <div data-label="Сб">—</div>
+        <div data-label="Вс">—</div>
+      </div>
+      <div class="table-row">
+        <div data-label="Время">12:00</div>
+        <div data-label="Пн">Пилатес</div>
+        <div data-label="Вт">—</div>
+        <div data-label="Ср">Растяжка</div>
+        <div data-label="Чт">—</div>
+        <div data-label="Пт">Силовая</div>
+        <div data-label="Сб">—</div>
+        <div data-label="Вс">—</div>
+      </div>
+      <div class="table-row">
+        <div data-label="Время">19:00</div>
+        <div data-label="Пн">Оздоровительная</div>
+        <div data-label="Вт">Силовая</div>
+        <div data-label="Ср">—</div>
+        <div data-label="Чт">Растяжка</div>
+        <div data-label="Пт">Пилатес</div>
+        <div data-label="Сб">—</div>
+        <div data-label="Вс">Функциональный</div>
+      </div>
+    </div>
+
+    <div class="book">
+      <h2>Записаться на тренировку</h2>
+      <form id="bookingForm" class="form-grid">
+        <label>
+          <span>День недели</span>
+          <select id="day" required>
+            <option value="Пн">Пн</option>
+            <option value="Вт">Вт</option>
+            <option value="Ср">Ср</option>
+            <option value="Чт">Чт</option>
+            <option value="Пт">Пт</option>
+            <option value="Сб">Сб</option>
+            <option value="Вс">Вс</option>
+          </select>
+        </label>
+        <label>
+          <span>Время</span>
+          <select id="time" required>
+            <option>08:00</option>
+            <option>12:00</option>
+            <option>19:00</option>
+          </select>
+        </label>
+        <label>
+          <span>Тип тренировки</span>
+          <select id="type" required>
+            <option>Силовая</option>
+            <option>Оздоровительная</option>
+            <option>Пилатес</option>
+            <option>Растяжка</option>
+            <option>Функциональный</option>
+          </select>
+        </label>
+        <button class="btn btn-primary" type="submit">Записаться</button>
+      </form>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>
+        <div class="logo"><span>S</span>Line</div>
+        <p class="muted">До встречи на тренировке!</p>
+      </div>
+    </div>
+    <div class="copyright">© 2025 SLine</div>
+  </footer>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>

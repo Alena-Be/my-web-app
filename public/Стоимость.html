@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Стоимость — SLine</title>
+  <link rel="stylesheet" href="bootstrap-5.3.8-dist/css/bootstrap.min.css">
+  <script src="bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css" />
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+    body {
+      display: flex;
+      flex-direction: column;
+      background-color: #727272b7;
+    }
+    main {
+      flex: 1;
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="index.html">
+        <img src="assets/logo.png" alt="SLine" width="40" height="40" />
+        <span>SLine</span>
+      </a>
+      <nav class="nav">
+       <a href="glavnaya">Главная</a>
+        <a href="registraciya">Регистрация</a>
+        <a href="lichniy-kabinet">Личный кабинет</a>
+        <a href="akcii">Акции</a>
+        <a href="otzyvy">Отзывы</a>
+        <a href="stoimost" class="active">Стоимость</a>
+        <a href="raspisanie">Расписание</a>
+      </nav>
+      <div id="authBlock" class="auth-block"></div>
+    </div>
+  </header>
+
+  <main class="container">
+    <h1>Стоимость программ</h1>
+    <div class="grid-3 pricing">
+      <div class="card">
+        <h3>Гостевой визит</h3>
+        <p class="price">0 ₽</p>
+        <ul class="list">
+          <li>1 групповая тренировка</li>
+          <li>Без ограничений по времени</li>
+        </ul>
+        <a class="btn btn-primary" href="registration.html">Попробовать</a>
+      </div>
+      <div class="card highlighted">
+        <h3>Месяц — 8 тренировок</h3>
+        <p class="price">3 200 ₽</p>
+        <ul class="list">
+          <li>2 занятия в неделю</li>
+          <li>Любой уровень подготовки</li>
+          <li>Заморозка 7 дней</li>
+        </ul>
+        <a class="btn btn-primary" href="registration.html">Оформить</a>
+      </div>
+      <div class="card">
+        <h3>Индивидуальные</h3>
+        <p class="price">1 200 ₽ / занятие</p>
+        <ul class="list">
+          <li>Персональный тренер</li>
+          <li>Индивидуальная программа</li>
+        </ul>
+        <a class="btn btn-ghost" href="registration.html">Запросить</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>
+        <div class="logo"><span>S</span>Line</div>
+        <p class="muted">Прозрачные тарифы без скрытых платежей.</p>
+      </div>
+    </div>
+    <div class="copyright">© 2025 SLine</div>
+  </footer>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>

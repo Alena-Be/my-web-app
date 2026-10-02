@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Вход — SLine</title>
+  <link rel="stylesheet" href="bootstrap-5.3.8-dist/css/bootstrap.min.css">
+  <script src="bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<style>
+  body { background-color: #727272b7; }
+</style>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="index.html">
+        <img src="assets/logo.png" alt="SLine" width="40" height="40" />
+        <span>SLine</span>
+      </a>
+      <nav class="nav">
+        <a href="glavnaya">Главная</a>
+        <a href="registraciya">Регистрация</a>
+        <a href="lichniy-kabinet">Личный кабинет</a>
+        <a href="akcii">Акции</a>
+        <a href="otzyvy">Отзывы</a>
+        <a href="stoimost">Стоимость</a>
+        <a href="raspisanie">Расписание</a>
+      </nav>
+      <div id="authBlock" class="auth-block"></div>
+    </div>
+  </header>
+
+  <main class="container narrow">
+    <h1>Вход</h1>
+    <p class="muted" style="color: black;">Войдите в аккаунт, чтобы управлять абонементом.</p>
+
+    <form id="vhodForm" class="form-card">
+      <div class="form-row">
+        <label for="vhodEmail">Email</label>
+        <input id="vhodEmail" name="email" type="email" placeholder="you@example.com" required />
+      </div>
+      <div class="form-row">
+        <label for="vhodPassword">Пароль</label>
+        <input id="vhodPassword" name="password" type="password" placeholder="Пароль" required />
+      </div>
+      <button type="submit" class="btn btn-primary full">Войти</button>
+      <p class="muted center">Нет аккаунта? <a href="/registraciya">Зарегистрироваться</a></p>
+    </form>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>
+        <div class="logo"><span>S</span>Line</div>
+        <p class="muted">До встречи на тренировке!</p>
+      </div>
+    </div>
+    <div class="copyright">© 2025 SLine</div>
+  </footer>
+
+  <script src="assets/app.js"></script>
+
+  <script>
+    const form = document.getElementById('vhodForm');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const email = document.getElementById('vhodEmail').value.trim();
+      const password = document.getElementById('vhodPassword').value;
+
+      try {
+        const res = await fetch('/api/vhod', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          alert(data.error || 'Ошибка входа');
+          return;
+        }
+
+        window.location.href = '/lichniy-kabinet';
+      } catch (err) {
+        console.error(err);
+        alert('Не удалось войти');
+      }
+    });
+  </script>
+</body>
+</html>

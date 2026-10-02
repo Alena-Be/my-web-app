@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Редактировать отзыв — SLine</title>
+  <link rel="stylesheet" href="bootstrap-5.3.8-dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="/"><span>SLine</span></a>
+      <div id="authBlock" class="auth-block"></div>
+    </div>
+  </header>
+
+  <main class="container narrow">
+    <h1>Редактировать отзыв</h1>
+    <form id="editForm" class="form-card">
+      <input type="hidden" id="editId" />
+      <div class="form-row">
+        <label for="editName">Имя</label>
+        <input type="text" id="editName" required />
+      </div>
+      <div class="form-row">
+        <label for="editText">Отзыв</label>
+        <textarea id="editText" rows="4" required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary full">Сохранить</button>
+      <p class="center"><a href="/reviews-list.html">← К списку</a></p>
+    </form>
+  </main>
+
+  <script src="assets/app.js"></script>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
+
+    async function loadReview() {
+      const res = await fetch(`/api/reviews/${id}`);
+      if (!res.ok) { alert('Отзыв не найден'); return; }
+      const r = await res.json();
+      document.getElementById('editId').value = r.id;
+      document.getElementById('editName').value = r.name;
+      document.getElementById('editText').value = r.text;
+    }
+
+    document.getElementById('editForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const id = document.getElementById('editId').value;
+      const name = document.getElementById('editName').value.trim();
+      const text = document.getElementById('editText').value.trim();
+
+      const res = await fetch(`/api/reviews/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, text })
+      });
+
+      if (res.ok) {
+        alert('Отзыв обновлён');
+        window.location.href = '/reviews-list.html';
+      } else {
+        const data = await res.json();
+        alert(data.error || 'Ошибка');
+      }
+    });
+
+    loadReview();
+  </script>
+</body>
+</html>

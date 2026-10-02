@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Регистрация — SLine</title>
+  <link rel="stylesheet" href="bootstrap-5.3.8-dist/css/bootstrap.min.css">
+  <script src="bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<style>
+  body { background-color: #727272b7; }
+</style>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="Главная.html">
+        <img src="assets/logo.png" alt="SLine" width="40" height="40" />
+        <span>SLine</span>
+      </a>
+      <nav class="nav">
+        <a href="glavnaya">Главная</a>
+        <a href="registraciya" class="active">Регистрация</a>
+        <a href="lichniy-kabinet">Личный кабинет</a>
+        <a href="akcii">Акции</a>
+        <a href="otzyvy">Отзывы</a>
+        <a href="stoimost">Стоимость</a>
+        <a href="raspisanie">Расписание</a>
+      </nav>
+      <div id="authBlock" class="auth-block"></div>
+    </div>
+  </header>
+
+  <main class="container narrow">
+    <h1>Регистрация</h1>
+    <p class="muted" style="color: black;">Создайте аккаунт, чтобы управлять абонементом и записываться на тренировки.</p>
+
+    <form id="registerForm" class="form-card">
+      <div class="form-row">
+        <label for="name">Имя</label>
+        <input id="name" name="name" type="text" placeholder="Ваше имя" required />
+      </div>
+      <div class="form-row">
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" placeholder="you@example.com" required />
+      </div>
+      <div class="form-row">
+        <label for="phone">Телефон</label>
+        <input id="phone" name="phone" type="tel" placeholder="+7 (___) ___-__-__" required />
+      </div>
+      <div class="form-row">
+        <label for="password">Пароль</label>
+        <input id="password" name="password" type="password" minlength="6" placeholder="Минимум 6 символов" required />
+      </div>
+      <div class="form-row">
+        <label class="checkbox">
+          <input type="checkbox" id="agree" required />
+          <span>Я соглашаюсь с условиями обработки персональных данных</span>
+        </label>
+      </div>
+      <button type="submit" id="submitBtn" class="btn btn-primary full">Создать аккаунт</button>
+      <p class="muted center">Уже есть аккаунт? <a href="/vhod.html">Войти</a></p>
+    </form>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>
+        <div class="logo"><span>S</span>Line</div>
+        <p class="muted">До встречи на тренировке!</p>
+      </div>
+    </div>
+    <div class="copyright">© 2025 SLine</div>
+  </footer>
+
+  <script src="assets/app.js"></script>
+
+  <script>
+    const form = document.getElementById('registerForm');
+    const submitBtn = document.getElementById('submitBtn');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // Если кнопка уже отключена — второй раз ничего не делаем
+      if (submitBtn.disabled) return;
+
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const password = document.getElementById('password').value;
+      const agree = document.getElementById('agree').checked;
+
+      if (!name || !email || !password) {
+        alert('Заполните имя, email и пароль');
+        return;
+      }
+
+      if (!agree) {
+        alert('Подтвердите согласие на обработку данных');
+        return;
+      }
+
+      // Блокируем кнопку ДО отправки — защита от двойного клика
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Отправка...';
+
+      try {
+        const res = await fetch('/api/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, phone, password })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          alert(data.error || 'Ошибка регистрации');
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Создать аккаунт';
+          return;
+        }
+
+        alert('Регистрация успешна! Теперь войдите.');
+        window.location.href = '/vhod.html';
+        // Кнопку специально не разблокируем — уходим со страницы
+      } catch (err) {
+        console.error(err);
+        alert('Не удалось отправить данные');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Создать аккаунт';
+      }
+    });
+  </script>
+</body>
+</html>
