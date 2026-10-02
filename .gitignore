@@ -2,3 +2,12 @@ node_modules/
 .env
 .DS_Store
 cookies*.txt
+
+# Лишние серверные файлы в public
+public/README.md
+public/assets/db.js
+public/check-table.js
+public/package-lock.json
+public/package.json
+public/server*.js
+public/test-db.js
