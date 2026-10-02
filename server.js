@@ -624,3 +624,5 @@ app.get('/admin/products', requireAuth, requireAdmin, async (req, res) => {
 app.listen(port, () => {
   console.log(`Сервер запущен на http://localhost:${port}`);
 });
+
+// Файл проверен и загружен в GitHub
